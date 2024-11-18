@@ -1,0 +1,49 @@
+def process_sales_data(sales_data):
+    # Создаем словарь для хранения заказов каждого гостя
+    guest_orders = {}
+    
+    # Создаем множество для уникальных блюд
+    dishes_set = set()
+    
+    # Обрабатываем данные о продажах
+    for guest, dish, quantity in sales_data:
+        # Добавляем блюдо в множество для уникальности
+        dishes_set.add(dish)
+        
+        # Если гость еще не в словаре, добавляем его с пустым списком заказов
+        if guest not in guest_orders:
+            guest_orders[guest] = {}
+        
+        # Увеличиваем количество порций блюда для гостя
+        if dish in guest_orders[guest]:
+            guest_orders[guest][dish] += quantity
+        else:
+            guest_orders[guest][dish] = quantity
+    
+    # Сортируем список гостей по алфавиту
+    sorted_guests = sorted(guest_orders.keys())
+    
+    # Выводим результаты для каждого гостя
+    for guest in sorted_guests:
+        print(f"{guest}:")
+        
+        # Создаем множество для уникальных блюд гостя
+        guest_dishes_set = set(guest_orders[guest].keys())
+        
+        # Выводим блюда и количество порций в лексикографическом порядке
+        for dish in sorted(guest_dishes_set):
+            print(f"  {dish}: {guest_orders[guest][dish]}")
+        
+        # Добавляем пустую строку между гостями для лучшей читаемости
+        print()
+
+# Пример использования функции
+sales_data = [
+    ("Alice", "Burger", 2),
+    ("Bob", "Salad", 1),
+    ("Charlie", "Pizza", 3),
+    ("David", "Burger", 1),
+    ("Eve", "Salad", 2),
+]
+
+process_sales_data(sales_data)
